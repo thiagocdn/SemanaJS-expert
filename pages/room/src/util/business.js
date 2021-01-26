@@ -1,9 +1,14 @@
 class Business {
-  constructor({room, media, view}) {
+  constructor({room, media, view, socketBuilder}) {
     this.media = media;
     this.room = room;
     this.view = view;
 
+    this.socketBuilder = socketBuilder
+      .setOnUserConnect(this.onUserConnect())
+      .setOnUserDisconnect(this.onUserDisconnect())
+      .build();
+    this.socketBuilder.emit('join-room', this.room, 'teste01');
     this.currentStream = {}
   };
 
@@ -25,4 +30,15 @@ class Business {
     })
   }
 
+  onUserConnect = function() {
+    return userId => {
+      console.log('user connected!', userId);
+    }
+  }
+
+  onUserDisconnect = function() {
+    return userId => {
+      console.log('user disconnected!', userId);
+    }
+  }
 }
