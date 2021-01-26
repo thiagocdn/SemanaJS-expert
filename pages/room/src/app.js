@@ -13,9 +13,19 @@ const onload = () => {
   const room = urlParams.get('room');
   console.log('this is the room', room)
 
-  const recorderBtn = document.getElementById('record')
-  recorderBtn.addEventListener('click', recordClick(recorderBtn))
+  // const recorderBtn = document.getElementById('record')
+  // recorderBtn.addEventListener('click', recordClick(recorderBtn))
 
+  const view = new View();
+  const media = new Media();
+  const deps = {
+    view,
+    media,
+    room,
+  };
+
+  Business.initialize(deps);
+  
 }
 
 window.onload = onload
